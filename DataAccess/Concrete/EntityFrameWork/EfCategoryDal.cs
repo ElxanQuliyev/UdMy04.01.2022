@@ -53,8 +53,6 @@ namespace DataAccess.Concrete.EntityFrameWork
                 //LessonCount=context.Courses.Where(cr=>cr.CategoryId==c.Id).Count(),
             }).ToList();
 
-
-
         }
 
         //Hyerarchy

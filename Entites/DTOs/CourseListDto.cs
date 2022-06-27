@@ -18,7 +18,9 @@ namespace Entites.DTOs
         public bool IsFeatured { get; set; }
         public decimal? Reyting { get; set; }
         public string? TrailerUrl { get; set; }
+        public int? CategoryId { get; set; }
         public string  CategoryName { get; set; }
+        public int InstructorId { get; set; }
         public string InstructorName { get; set; }
         public string? InstructorPhoto { get; set; }
         public DateTime PublishDate { get; set; }

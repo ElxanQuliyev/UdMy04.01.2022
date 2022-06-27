@@ -30,8 +30,7 @@ namespace DataAccess.Concrete.EntityFrameWork
                 .Include(cs => cs.Instructor)
                 .Include(c => c.Lessons)
                 .ThenInclude(c=>c.LessonVideos)
-                .FirstOrDefaultAsync(c => c.Id == id);
-
+                .FirstOrDefaultAsync(c => c.Id == id && !c.IsDeleted);
             return singleCourse;
         }
 
@@ -39,7 +38,7 @@ namespace DataAccess.Concrete.EntityFrameWork
         {
             using UdMyDbContext context = new();
             return context.Courses
-                .Where(c => c.CategoryId == categoryId || c.Category.ParentCategoryId==categoryId)
+                .Where(c => !c.IsDeleted && (c.CategoryId == categoryId || c.Category.ParentCategoryId==categoryId))
                 .Include(c => c.Category.ParentCategory)
                 //.ThenInclude(c=>c.ParentCategory)
                 .Include(c => c.Instructor)
@@ -55,6 +54,7 @@ namespace DataAccess.Concrete.EntityFrameWork
                 .Include(c => c.Lessons)
                 .Include(c => c.CourseSpecifactions)
                 .ThenInclude(c=>c.Specifaction)
+                .Where(c=>!c.IsDeleted)
                 .ToList();
             return myCourses;
 
@@ -66,6 +66,7 @@ namespace DataAccess.Concrete.EntityFrameWork
             var myCourses =  context.Courses
                 .Include(c => c.Instructor)
                 .Include(c => c.Category)
+                .Where(c=>!c.IsDeleted)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(item.Q) && item.Q != null)
@@ -92,7 +93,7 @@ namespace DataAccess.Concrete.EntityFrameWork
                 };
             }
 
-            if (item.InstructorIds.Count> 0)
+            if ( item.InstructorIds.Count> 0)
             {
                 myCourses = myCourses.Where(c => item.InstructorIds.Contains(c.InstructorId));
             }
