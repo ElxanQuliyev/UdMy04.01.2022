@@ -110,7 +110,7 @@ namespace DataAccess.Concrete.EntityFrameWork
 
             return await myCourses.ToListAsync();
         }
-        public async void UpdateCourse(int id, Course course)
+        public async Task UpdateCourse(int id, Course course)
         {
             using UdMyDbContext context = new();
             course.Id = id;
@@ -119,7 +119,7 @@ namespace DataAccess.Concrete.EntityFrameWork
             context.RemoveRange(singleCourse.CourseSpecifactions);
             //context.Specifactions.RemoveRange(singleCourse.CourseSpecifactions.Where(c=>c.CourseId==id).ToArray());
             context.Courses.Update(course);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }

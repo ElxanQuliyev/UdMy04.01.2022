@@ -15,7 +15,7 @@ namespace DataAccess.Abstract
         public List<Course> ListCourses();
         public Task<Course> GetCourse(int id);
         public Task<List<Course>>? FilterCourse(FilterCourseItem item);
-        public void UpdateCourse(int id,Course courseDTOs);
+        public Task UpdateCourse(int id,Course courseDTOs);
         public List<Course> GetCourseByCategory(int categoryId);
     }
 }

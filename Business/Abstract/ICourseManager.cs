@@ -16,6 +16,6 @@ namespace Business.Abstract
         List<Course> GetCoursesByCategory(int categoryId);
         void Add(Course course);
         void Remove(int id);
-        void Update(int id, Course course);
+        Task Update(int id, Course course);
     }
 }

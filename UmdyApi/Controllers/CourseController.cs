@@ -86,7 +86,7 @@ namespace UdmyApi.Controllers
 
         // PUT api/<CourseController>/5
         [HttpPut("{id}")]
-        public JsonResult Put(int? id, [FromBody] CourseDTOs courseDT)
+        public async Task<JsonResult> Put(int? id, [FromBody] CourseDTOs courseDT)
         {
             
             JsonResult res = new(new { });
@@ -96,8 +96,8 @@ namespace UdmyApi.Controllers
             };
             var _mapperCourse = _mapper.Map<CourseDTOs,Course>(courseDT);
 
-            _courseManager.Update(id.Value, _mapperCourse);
-            res.Value = new { status = 200, message = "Successfully updated" };
+            await _courseManager.Update(id.Value, _mapperCourse);
+            res.Value = new { status = 200,data= courseDT, message = "Successfully updated" };
             return res;
         }
         

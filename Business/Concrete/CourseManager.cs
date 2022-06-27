@@ -54,11 +54,9 @@ namespace Business.Concrete
             }
         }
 
-        public void Update(int id, Course course)
+        public async Task Update(int id, Course course)
         {
-            _coursedal.UpdateCourse(id, course);   
+            await _coursedal.UpdateCourse(id, course);   
         }
-
- 
     }
 }
