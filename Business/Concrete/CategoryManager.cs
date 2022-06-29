@@ -1,4 +1,5 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using DataAccess.Abstract;
 using Entites;
 using Entites.DTOs;
@@ -13,10 +14,13 @@ namespace Business.Concrete
     public class CategoryManager : ICategoryManager
     {
         private readonly ICategoryDal _dal;
+        private readonly IMapper _mapper;
 
-        public CategoryManager(ICategoryDal dal)
+
+        public CategoryManager(ICategoryDal dal, IMapper mapper)
         {
             _dal = dal;
+            _mapper = mapper;
         }
 
         public void Add(CategoryDTO category)
@@ -34,6 +38,11 @@ namespace Business.Concrete
         public List<CategoryWithChildernDTO> GetAll()
         {
             return _dal.GetCategoryWithChildrens();
+        }
+
+        public async Task<List<Category>> GetCategoryWithParent()
+        {
+            return await _dal.GetCategoriesWithParent();
         }
 
         public List<CategoryListDTO> GetChildrenByParentId(int parentId)

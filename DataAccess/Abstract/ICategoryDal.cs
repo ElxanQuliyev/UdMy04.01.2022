@@ -12,6 +12,7 @@ namespace DataAccess.Abstract
     public interface ICategoryDal : IEntityRepository <Category>
     {
         List<CategoryListDTO> GetDTOCategories();
+        Task<List<Category>> GetCategoriesWithParent();
         List<CategoryWithChildernDTO> GetCategoryWithChildrens();
         List<CategoryListDTO> GetCategoryChildrenByID(int parentId);
     }
