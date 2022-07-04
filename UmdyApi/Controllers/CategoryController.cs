@@ -40,12 +40,21 @@ namespace UdmyApi.Controllers
             return _categoryManager.GetChildrenByParentId(parentId.Value);
         }
         [HttpPost("Add")]
-        public CategoryDTO Add(CategoryDTO category)
+        public JsonResult Add([FromBody]CategoryDTO category)
         {
-            _categoryManager.Add(category);
-            return category;
+            JsonResult res = new(new { });
+            try
+            {
+                category.ParentCategoryId = category.ParentCategoryId == 0 ? null : category.ParentCategoryId;
+                _categoryManager.Add(category);
+                res.Value = new { status = 201, message = "category created successfully" };
+                return res;
+            }
+            catch (Exception)
+            {
+                res.Value = new { status = 403, message = "Some problems when category created" };
+                return res;
+            }
         } 
-
-
     }
 }
